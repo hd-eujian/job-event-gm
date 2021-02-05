@@ -40,24 +40,6 @@ public class JobScheduled {
                 count.set(0);
             }
         }
-//        String value = redisTemplate.opsForValue().get(leaderKey);
-//        if(PublicUtil.isNotEmpty(value) && !StringUtils.equals(value,leaderId)){
-//            isLeader = false;
-//            log.debug("不是我成为leader，直接退出");
-//            return;
-//        }
-//
-//        if(StringUtils.equals(value,leaderId)){
-//            redisTemplate.opsForValue().set(leaderKey,leaderId,1, TimeUnit.MINUTES);
-//            isLeader = true;
-//            log.debug("我成为leader，直接退出");
-//            return;
-//        }
-//
-//
-//        redisTemplate.opsForValue().set(leaderKey,leaderId,10, TimeUnit.SECONDS);
-//        isLeader = true;
-//        log.info("我成为leader，直接退出");
     }
 
     /**
@@ -73,4 +55,16 @@ public class JobScheduled {
 
     }
 
+    /**
+     * 把准备就绪的任务加到redis
+     */
+    @Scheduled(cron = " 0/1 * * * * ? ")
+    public void moveDb2Redis() {
+        if(!isLeader){
+            log.debug("不是leader，不工作");
+            return;
+        }
+        jobEventService.moveDb2Redis();
+
+    }
 }

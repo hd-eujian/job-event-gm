@@ -1,6 +1,7 @@
 package com.eujian.gm.controller;
 
 import com.eujian.gm.common.RedisKey;
+import com.eujian.gm.entity.creq.RedisJobEventReq;
 import com.eujian.gm.entity.creq.RegisterReq;
 import com.eujian.gm.entity.redisbo.RedisJobEvent;
 import com.eujian.gm.service.JobEventService;
@@ -21,13 +22,13 @@ public class JobEventController {
     @Autowired
     private RedisTemplate redisTemplate;
     @PostMapping("/register")
-    public CResult<Integer> register(@RequestBody RegisterReq registerReq){
-        Integer id = jobEventService.registerEvent(registerReq);
-        return CResult.success(id);
+    public CResult<Object> register(@RequestBody RegisterReq registerReq){
+//        Integer id = jobEventService.registerEvent(registerReq);
+        return CResult.success(registerReq);
     }
 
     @PostMapping("/registerDemo")
-    public CResult<Integer> registerDemo(@RequestBody RedisJobEvent req){
+    public CResult<Integer> registerDemo(@RequestBody RedisJobEventReq req){
         ZSetOperations zSetOperations = redisTemplate.opsForZSet();
         zSetOperations.add(RedisKey.JOB_ZET_KEY, req,req.getScore().doubleValue());
         return CResult.success(1);

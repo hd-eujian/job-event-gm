@@ -8,5 +8,5 @@ public class RedisJobEvent implements Serializable {
 
     private Integer id;
 
-    private Long score;
+//    private Long score;
 }
