@@ -49,7 +49,7 @@ public class RedisTemplateService {
                 }else {
                 	count++;
                 	if (retryTimes == count) {
-        				log.warn("has tried {} times , failed to acquire lock for key:{},value:{}", count, lockKey, value);
+        				log.debug("has tried {} times , failed to acquire lock for key:{},value:{}", count, lockKey, value);
         				break;
         			} else {
         				log.warn("try to acquire lock {} times for key:{},value:{}", count, lockKey, value);
